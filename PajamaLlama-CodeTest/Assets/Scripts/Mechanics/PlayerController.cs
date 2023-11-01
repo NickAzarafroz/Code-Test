@@ -30,6 +30,7 @@ namespace Platformer.Mechanics
         public JumpState jumpState = JumpState.Grounded;
         private bool stopJump;
         private bool doubleJump;
+        public bool invincible = false;
         /*internal new*/
         public Collider2D collider2d;
         /*internal new*/ public AudioSource audioSource;
@@ -44,6 +45,8 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
+        private Color initialPlayerColor;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -51,6 +54,8 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+
+            initialPlayerColor = spriteRenderer.color;
         }
 
         protected override void Update()
@@ -145,6 +150,26 @@ namespace Platformer.Mechanics
             Jumping,
             InFlight,
             Landed
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Lollipop")) 
+            {
+                StartCoroutine(InvincibilityTimer());
+                Destroy(collision.gameObject);
+            }
+        }
+
+        IEnumerator InvincibilityTimer() 
+        {
+            invincible = true;
+            spriteRenderer.color = new Color(1f, 1f, 0f);
+            maxSpeed = 4.5f;
+            yield return new WaitForSeconds(8f);
+            invincible = false;
+            spriteRenderer.color = initialPlayerColor;
+            maxSpeed = 3f;
         }
     }
 }

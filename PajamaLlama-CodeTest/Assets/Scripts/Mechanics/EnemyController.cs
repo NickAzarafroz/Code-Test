@@ -23,12 +23,22 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => _collider.bounds;
 
+        public EnemyType enemyType = EnemyType.RedBlob;
+
         void Awake()
         {
             control = GetComponent<AnimationController>();
             _collider = GetComponent<Collider2D>();
             _audio = GetComponent<AudioSource>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        void Start()
+        {
+            if (EnemyType.PlayerEnemy == enemyType)
+            {
+                StartCoroutine(JumpingInterval());
+            }
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -48,6 +58,23 @@ namespace Platformer.Mechanics
             {
                 if (mover == null) mover = path.CreateMover(control.maxSpeed * 0.5f);
                 control.move.x = Mathf.Clamp(mover.Position.x - transform.position.x, -1, 1);
+            }
+        }
+
+        public enum EnemyType
+        {
+            PlayerEnemy,
+            RedBlob
+        }
+
+        IEnumerator JumpingInterval() 
+        {
+            while (true) 
+            {
+                control.jumpTakeOffSpeed = 6f;
+                control.maxSpeed = 3f;
+                control.jump = true;
+                yield return new WaitForSeconds(2f);
             }
         }
 
