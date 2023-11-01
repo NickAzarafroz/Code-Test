@@ -30,7 +30,13 @@ namespace Platformer.Mechanics
         public JumpState jumpState = JumpState.Grounded;
         private bool stopJump;
         private bool doubleJump;
+        private bool canDash = true;
+        private bool isDashing;
+        public float dashingPower = 6f;
+        public float dashingTime = 0.2f;
+        public float dashingCooldown = 1f;
         public bool invincible = false;
+        public TrailRenderer tr;
         /*internal new*/
         public Collider2D collider2d;
         /*internal new*/ public AudioSource audioSource;
@@ -62,6 +68,11 @@ namespace Platformer.Mechanics
         {
             if (controlEnabled)
             {
+                if (isDashing) 
+                {
+                    return;
+                }
+
                 move.x = Input.GetAxis("Horizontal");
                 if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
                     jumpState = JumpState.PrepareToJump;
@@ -69,6 +80,11 @@ namespace Platformer.Mechanics
                 {
                     stopJump = true;
                     Schedule<PlayerStopJump>().player = this;
+                }
+
+                if(Input.GetButtonDown("Dash") && canDash) 
+                {
+                    StartCoroutine(Dash());
                 }
             }
             else
@@ -170,6 +186,31 @@ namespace Platformer.Mechanics
             invincible = false;
             spriteRenderer.color = initialPlayerColor;
             maxSpeed = 3f;
+        }
+
+        IEnumerator Dash() 
+        {
+            canDash = false;
+            isDashing = true;
+            velocity.y = 1f;
+            Vector2 originalVelocity = body.velocity;
+
+            if (spriteRenderer.flipX) 
+            {
+                body.velocity = new Vector2(transform.localScale.x * dashingPower * -1, 0f);
+            }
+            else 
+            {
+                body.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+            }
+           
+            tr.emitting = true;
+            yield return new WaitForSeconds(dashingTime);
+            body.velocity = originalVelocity;
+            tr.emitting = false;
+            isDashing = false;
+            yield return new WaitForSeconds(dashingCooldown);
+            canDash = true;
         }
     }
 }
