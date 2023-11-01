@@ -29,7 +29,9 @@ namespace Platformer.Mechanics
 
         public JumpState jumpState = JumpState.Grounded;
         private bool stopJump;
-        /*internal new*/ public Collider2D collider2d;
+        private bool doubleJump;
+        /*internal new*/
+        public Collider2D collider2d;
         /*internal new*/ public AudioSource audioSource;
         public Health health;
         public bool controlEnabled = true;
@@ -81,6 +83,7 @@ namespace Platformer.Mechanics
                     jumpState = JumpState.Jumping;
                     jump = true;
                     stopJump = false;
+                    doubleJump = true;
                     break;
                 case JumpState.Jumping:
                     if (!IsGrounded)
@@ -90,6 +93,12 @@ namespace Platformer.Mechanics
                     }
                     break;
                 case JumpState.InFlight:
+                    if(doubleJump && Input.GetButtonDown("Jump")) 
+                    {
+                        Schedule<PlayerJumped>().player = this;
+                        velocity.y = jumpTakeOffSpeed * model.jumpModifier;
+                        doubleJump = false;
+                    }
                     if (IsGrounded)
                     {
                         Schedule<PlayerLanded>().player = this;
