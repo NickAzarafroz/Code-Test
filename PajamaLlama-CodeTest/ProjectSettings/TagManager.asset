@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TutorialRequirement
   - Lollipop
+  - Token
   layers:
   - Default
   - TransparentFX
