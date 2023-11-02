@@ -6,11 +6,17 @@ public class ProjectileSpawner : MonoBehaviour
 {
     public GameObject projectile;
     public Transform projectilePos;
+    public AudioClip asteroidSpawn;
     public float distanceThreshold = 10f;
 
     private GameObject player;
-    private float distance;
+    private AudioSource audioSource;
+    private float distance = 100f;
     // Start is called before the first frame update
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -29,6 +35,7 @@ public class ProjectileSpawner : MonoBehaviour
         {
             if(distance < distanceThreshold) 
             {
+                audioSource.PlayOneShot(asteroidSpawn);
                 Instantiate(projectile, projectilePos.transform.position, Quaternion.identity);
             }
             yield return new WaitForSeconds(1.5f);

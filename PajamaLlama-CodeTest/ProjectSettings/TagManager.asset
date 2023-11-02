@@ -8,6 +8,8 @@ TagManager:
   - Lollipop
   - Token
   - Enemy
+  - Rocket
+  - Asteroid
   layers:
   - Default
   - TransparentFX

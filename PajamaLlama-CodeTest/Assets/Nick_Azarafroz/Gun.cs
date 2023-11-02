@@ -7,11 +7,13 @@ public class Gun : MonoBehaviour
     public GameObject projectile;
     public GameObject effect;
     public Transform spawnTransform;
+    public AudioClip shootSound;
 
     private bool playerPickedMeUp = false;
     private float flipAngleThreshold = 90f;
 
     private SpriteRenderer sr;
+    private AudioSource audioSource;
     private GameObject mainCamera;
     private CameraShake shakeCamera;
     // Start is called before the first frame update
@@ -19,6 +21,7 @@ public class Gun : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         shakeCamera = mainCamera.GetComponent<CameraShake>();
     }
@@ -50,6 +53,7 @@ public class Gun : MonoBehaviour
             if (Input.GetButtonUp("Attack"))
             {
                 shakeCamera.SetShake(true);
+                audioSource.PlayOneShot(shootSound);
                 Instantiate(effect, spawnTransform.position, transform.rotation);
                 Instantiate(projectile, spawnTransform.position, transform.rotation);
             }

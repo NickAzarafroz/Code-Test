@@ -9,6 +9,8 @@ using static Platformer.Core.Simulation;
 public class Rocket : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private AudioSource audioSource;
+    public GameObject effect;
     public float force = 5f;
     // Start is called before the first frame update
 
@@ -45,6 +47,7 @@ public class Rocket : MonoBehaviour
             {
                 Schedule<EnemyDeath>().enemy = enemyController;
             }
+            Instantiate(effect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

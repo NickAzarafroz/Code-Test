@@ -14,6 +14,7 @@ namespace Platformer.Mechanics
     {
         public PatrolPath path;
         public AudioClip ouch;
+        public AudioClip deathShell;
 
         internal PatrolPath.Mover mover;
         internal AnimationController control;
@@ -49,6 +50,14 @@ namespace Platformer.Mechanics
                 var ev = Schedule<PlayerEnemyCollision>();
                 ev.player = player;
                 ev.enemy = this;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Rocket")) 
+            {
+                _audio.PlayOneShot(deathShell);
             }
         }
 

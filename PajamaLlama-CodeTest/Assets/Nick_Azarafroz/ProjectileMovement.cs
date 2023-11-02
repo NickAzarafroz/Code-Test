@@ -6,6 +6,7 @@ public class ProjectileMovement : MonoBehaviour
 {
     private GameObject player;
     private Rigidbody2D rb;
+    public GameObject effect;
     public float force;
     // Start is called before the first frame update
     void Start()
@@ -23,5 +24,22 @@ public class ProjectileMovement : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player")) 
+        {
+            Instantiate(effect, transform.position, transform.rotation); 
+            Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("Rocket"))
+        {
+            Instantiate(effect, transform.position, transform.rotation);
+            Instantiate(effect, collision.transform.position, collision.transform.rotation);
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
     }
 }
