@@ -1,6 +1,10 @@
+using Platformer.Gameplay;
+using Platformer.Mechanics;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static Platformer.Core.Simulation;
 
 public class Rocket : MonoBehaviour
 {
@@ -28,5 +32,20 @@ public class Rocket : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy")) 
+        {
+            var enemyHealth = collision.GetComponent<Health>();
+            var enemyController = collision.GetComponent<EnemyController>();
+            enemyHealth.Decrement(0.2f);
+            if (!enemyHealth.IsAlive) 
+            {
+                Schedule<EnemyDeath>().enemy = enemyController;
+            }
+            Destroy(gameObject);
+        }
     }
 }

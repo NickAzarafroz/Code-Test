@@ -8,6 +8,9 @@ public class CheckPoint : MonoBehaviour
 {
     PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
+    public GameObject effect;
+    public Transform effectPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,7 @@ public class CheckPoint : MonoBehaviour
         if (collision.CompareTag("Player")) 
         {
             model.spawnPoint.position = transform.position;
+            Instantiate(effect, effectPosition.position, Quaternion.identity);
             GetComponent<BoxCollider2D>().enabled = false;
         }
     }

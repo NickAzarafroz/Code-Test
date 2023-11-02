@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 1824045667}
   - component: {fileID: 651476478395875068}
   - component: {fileID: 4837086509000219205}
+  - component: {fileID: 5733939734604033311}
   m_Layer: 13
   m_Name: EnemyPlayerRanged
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,6 +290,19 @@ MonoBehaviour:
   path: {fileID: 0}
   ouch: {fileID: 8300000, guid: b7f741588644cd64bbee6387cb54a96d, type: 3}
   enemyType: 1
+--- !u!114 &5733939734604033311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208144871472054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffad43bb006db4856a9c527b89b48db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 1
 --- !u!1001 &1468679721089191042
 PrefabInstance:
   m_ObjectHideFlags: 0

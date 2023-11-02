@@ -17,6 +17,7 @@ namespace Platformer.Mechanics
         public AudioClip jumpAudio;
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
+        public AudioClip walkAudio;
 
         /// <summary>
         /// Max horizontal speed of the player.
@@ -74,8 +75,18 @@ namespace Platformer.Mechanics
                 }
 
                 move.x = Input.GetAxis("Horizontal");
+
+                if(Mathf.Abs(Input.GetAxis("Horizontal")) == 1 && jumpState == JumpState.Grounded)
+                {
+                    if(!audioSource.isPlaying) 
+                    {
+                        audioSource.PlayOneShot(walkAudio);
+                    }
+                }
+
                 if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
                     jumpState = JumpState.PrepareToJump;
+
                 else if (Input.GetButtonUp("Jump"))
                 {
                     stopJump = true;

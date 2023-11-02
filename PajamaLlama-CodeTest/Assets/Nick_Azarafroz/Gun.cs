@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    public GameObject projectile; 
+    public GameObject projectile;
+    public GameObject effect;
+    public Transform spawnTransform;
 
     private bool playerPickedMeUp = false;
     private float flipAngleThreshold = 90f;
@@ -48,7 +50,8 @@ public class Gun : MonoBehaviour
             if (Input.GetButtonUp("Attack"))
             {
                 shakeCamera.SetShake(true);
-                Instantiate(projectile, transform.position, transform.rotation);
+                Instantiate(effect, spawnTransform.position, transform.rotation);
+                Instantiate(projectile, spawnTransform.position, transform.rotation);
             }
         }
     }
