@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    public GameObject projectile;
-    public GameObject effect;
-    public Transform spawnTransform;
-    public AudioClip shootSound;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject effect;
+    [SerializeField] private Transform spawnTransform;
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private CursorManager cursorManager;
 
     private bool playerPickedMeUp = false;
     private float flipAngleThreshold = 90f;
@@ -53,6 +54,10 @@ public class Gun : MonoBehaviour
             if (Input.GetButtonUp("Attack"))
             {
                 shakeCamera.SetShake(true);
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
                 audioSource.PlayOneShot(shootSound);
                 Instantiate(effect, spawnTransform.position, transform.rotation);
                 Instantiate(projectile, spawnTransform.position, transform.rotation);
@@ -64,6 +69,8 @@ public class Gun : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            cursorManager.ChangeCursor();
+
             transform.SetParent(collision.gameObject.transform, true);
 
             transform.position = new Vector3(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y

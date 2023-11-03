@@ -8,10 +8,12 @@ using static Platformer.Core.Simulation;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] private GameObject effect;
+    [SerializeField] private float force = 5f;
+
     private Rigidbody2D rb;
     private AudioSource audioSource;
-    public GameObject effect;
-    public float force = 5f;
+
     // Start is called before the first frame update
 
     void Awake()
@@ -43,12 +45,15 @@ public class Rocket : MonoBehaviour
             var enemyHealth = collision.GetComponent<Health>();
             var enemyController = collision.GetComponent<EnemyController>();
             var enemyDamage = collision.GetComponent<DamageHit>();
-            enemyHealth.Decrement(0.2f);
+
+            enemyHealth.Decrement(0.4f);
             enemyDamage.Flash();
+
             if (!enemyHealth.IsAlive) 
             {
                 Schedule<EnemyDeath>().enemy = enemyController;
             }
+
             Instantiate(effect, transform.position, transform.rotation);
             Destroy(gameObject);
         }

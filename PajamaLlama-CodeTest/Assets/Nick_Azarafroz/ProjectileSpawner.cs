@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ProjectileSpawner : MonoBehaviour
 {
-    public GameObject projectile;
-    public GameObject spawnEffect;
-    public Transform projectilePos;
-    public AudioClip asteroidSpawn;
-    public float distanceThreshold = 10f;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject spawnEffect;
+    [SerializeField] private Transform projectilePos;
+    [SerializeField] private AudioClip asteroidSpawn;
+    [SerializeField] private float distanceThreshold = 10f;
 
     private GameObject player;
     private AudioSource audioSource;
@@ -40,7 +40,7 @@ public class ProjectileSpawner : MonoBehaviour
                 Instantiate(spawnEffect, projectilePos.transform.position, Quaternion.identity);
                 Instantiate(projectile, projectilePos.transform.position, Quaternion.identity);
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
         }
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    public float cameraShakeDurarion;
-    public AnimationCurve curve;
+    [SerializeField] private float cameraShakeDurarion;
+    [SerializeField] private AnimationCurve curve;
 
     private bool cameraShakeStart;
     // Start is called before the first frame update

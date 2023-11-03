@@ -18,11 +18,14 @@ namespace Platformer.Mechanics
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
         public AudioClip walkAudio;
+        public AudioClip invincibility;
+        public GameController controller;
 
         public GameObject jumpEffect;
         public Transform jumpPosition;
 
         private DamageHit flash;
+        private AudioSource controllerAudio;
 
         /// <summary>
         /// Max horizontal speed of the player.
@@ -34,19 +37,27 @@ namespace Platformer.Mechanics
         public float jumpTakeOffSpeed = 7;
 
         public JumpState jumpState = JumpState.Grounded;
+
         private bool stopJump;
         private bool doubleJump;
         private bool canDash = true;
         private bool isDashing;
+
         public float dashingPower = 6f;
         public float dashingTime = 0.2f;
         public float dashingCooldown = 1f;
+
         public bool invincible = false;
+
         public TrailRenderer tr;
+
         /*internal new*/
         public Collider2D collider2d;
+
         /*internal new*/ public AudioSource audioSource;
+
         public Health health;
+
         public bool controlEnabled = true;
 
         bool jump;
@@ -67,6 +78,8 @@ namespace Platformer.Mechanics
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
             flash = GetComponent<DamageHit>();
+
+            controllerAudio = controller.GetComponent<AudioSource>();
 
             initialPlayerColor = spriteRenderer.color;
         }
@@ -111,6 +124,7 @@ namespace Platformer.Mechanics
             {
                 move.x = 0;
             }
+
             UpdateJumpState();
             base.Update();
         }
@@ -210,7 +224,11 @@ namespace Platformer.Mechanics
             invincible = true;
             spriteRenderer.color = new Color(1f, 1f, 0f);
             maxSpeed = 4.5f;
-            yield return new WaitForSeconds(8f);
+            controllerAudio.mute = true;
+            audioSource.PlayOneShot(invincibility);
+            yield return new WaitForSeconds(10f);
+            controllerAudio.mute = false;
+            audioSource.Stop();
             invincible = false;
             spriteRenderer.color = initialPlayerColor;
             maxSpeed = 3f;

@@ -5,10 +5,10 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
 
-    public float speed = 2f;
-    public float amplitude = 2f;
-    public bool horizontal;
-    public bool vertical;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float amplitude = 2f;
+    [SerializeField] private bool horizontal;
+    [SerializeField] private bool vertical;
 
     private float startX;
     private float startY;

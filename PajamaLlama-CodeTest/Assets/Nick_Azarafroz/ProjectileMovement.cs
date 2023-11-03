@@ -9,10 +9,11 @@ using static Platformer.Core.Simulation;
 
 public class ProjectileMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject effect;
+    [SerializeField] private float force;
+
     private GameObject player;
     private Rigidbody2D rb;
-    public GameObject effect;
-    public float force;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,17 +36,11 @@ public class ProjectileMovement : MonoBehaviour
     {
         if (collision.CompareTag("Player")) 
         {
-            var player = collision.GetComponent<PlayerController>();
-            var playerHealth = collision.GetComponent<Health>();
-            playerHealth.Decrement(1f);
+            var playerController = collision.GetComponent<PlayerController>();
 
-            if (!playerHealth.IsAlive) 
+            if (!playerController.invincible) 
             {
-                player.controlEnabled = false;
-                player.audioSource.PlayOneShot(player.ouchAudio);
-                player.animator.SetTrigger("hurt");
-                player.animator.SetBool("dead", true);
-                Schedule<PlayerSpawn>(2);
+                Schedule<PlayerDeath>();
             }
 
             Instantiate(effect, transform.position, transform.rotation); 

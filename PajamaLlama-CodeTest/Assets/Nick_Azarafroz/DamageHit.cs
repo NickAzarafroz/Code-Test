@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DamageHit : MonoBehaviour
 {
-    public Material flashMaterial;
-    public float duration;
+    [SerializeField] private Material flashMaterial;
+    [SerializeField] private float duration;
 
     private SpriteRenderer spriteRenderer;
     private Material originalMaterial;

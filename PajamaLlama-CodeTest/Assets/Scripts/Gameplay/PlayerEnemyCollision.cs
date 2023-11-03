@@ -31,9 +31,11 @@ namespace Platformer.Gameplay
             if (willHurtEnemy)
             {
                 var enemyHealth = enemy.GetComponent<Health>();
+                var enemyHit = enemy.GetComponent<DamageHit>();
                 if (enemyHealth != null)
                 {
                     enemyHealth.Decrement(1f);
+                    enemyHit.Flash();
                     if (!enemyHealth.IsAlive)
                     {
                         Schedule<EnemyDeath>().enemy = enemy;

@@ -30,7 +30,7 @@ public class Magnet : MonoBehaviour
             transform.SetParent(collision.gameObject.transform, true);
 
             transform.position = new Vector3(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y
-               + 0.7f, collision.gameObject.transform.position.z);
+               + 0.9f, collision.gameObject.transform.position.z);
 
             GetComponent<CircleCollider2D>().radius = 10f;
             Destroy(gameObject, 12f);

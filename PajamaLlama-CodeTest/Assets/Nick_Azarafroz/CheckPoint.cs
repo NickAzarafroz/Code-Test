@@ -8,9 +8,9 @@ public class CheckPoint : MonoBehaviour
 {
     PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
-    public GameObject effect;
-    public Transform effectPosition;
-    public AudioClip soundCheckPoint;
+    [SerializeField] private GameObject effect;
+    [SerializeField] private Transform effectPosition;
+    [SerializeField] private AudioClip soundCheckPoint;
 
     private AudioSource audioSource;
 
