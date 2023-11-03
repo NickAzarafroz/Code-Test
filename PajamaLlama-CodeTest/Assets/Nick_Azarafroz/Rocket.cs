@@ -42,7 +42,9 @@ public class Rocket : MonoBehaviour
         {
             var enemyHealth = collision.GetComponent<Health>();
             var enemyController = collision.GetComponent<EnemyController>();
+            var enemyDamage = collision.GetComponent<DamageHit>();
             enemyHealth.Decrement(0.2f);
+            enemyDamage.Flash();
             if (!enemyHealth.IsAlive) 
             {
                 Schedule<EnemyDeath>().enemy = enemyController;

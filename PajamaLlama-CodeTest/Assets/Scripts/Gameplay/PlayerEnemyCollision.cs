@@ -24,7 +24,8 @@ namespace Platformer.Gameplay
 
             if (player.invincible)
             {
-                willHurtEnemy = true;
+                Schedule<EnemyDeath>().enemy = enemy;
+                return;
             }
 
             if (willHurtEnemy)
@@ -36,11 +37,13 @@ namespace Platformer.Gameplay
                     if (!enemyHealth.IsAlive)
                     {
                         Schedule<EnemyDeath>().enemy = enemy;
+                        Schedule<PlayerJumped>();
                         player.Bounce(2);
                     }
                     else
                     {
-                        player.Bounce(7);
+                        Schedule<PlayerJumped>();
+                        player.Bounce(4);
                     }
                 }
                 else

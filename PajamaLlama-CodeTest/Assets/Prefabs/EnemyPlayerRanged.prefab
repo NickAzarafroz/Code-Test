@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 651476478395875068}
   - component: {fileID: 4837086509000219205}
   - component: {fileID: 5733939734604033311}
+  - component: {fileID: 6556001783084206269}
   m_Layer: 13
   m_Name: EnemyPlayerRanged
   m_TagString: Enemy
@@ -82,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300020, guid: ba86c7b200abe499cb750833482830b3, type: 3}
-  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  m_Color: {r: 0.10256318, g: 0.10265358, b: 0.8113208, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -304,6 +305,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1
+--- !u!114 &6556001783084206269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208144871472054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8fb4d3bfa761546b4959c484dd3fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: e3c709243365d6640aaa744b016bba62, type: 2}
+  duration: 0.2
 --- !u!1001 &1468679721089191042
 PrefabInstance:
   m_ObjectHideFlags: 0

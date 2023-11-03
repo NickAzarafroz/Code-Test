@@ -19,6 +19,11 @@ namespace Platformer.Mechanics
         public AudioClip ouchAudio;
         public AudioClip walkAudio;
 
+        public GameObject jumpEffect;
+        public Transform jumpPosition;
+
+        private DamageHit flash;
+
         /// <summary>
         /// Max horizontal speed of the player.
         /// </summary>
@@ -61,6 +66,7 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            flash = GetComponent<DamageHit>();
 
             initialPlayerColor = spriteRenderer.color;
         }
@@ -84,8 +90,11 @@ namespace Platformer.Mechanics
                     }
                 }
 
-                if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
+                if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump")) 
+                {
                     jumpState = JumpState.PrepareToJump;
+                }
+
 
                 else if (Input.GetButtonUp("Jump"))
                 {
@@ -121,6 +130,7 @@ namespace Platformer.Mechanics
                     if (!IsGrounded)
                     {
                         Schedule<PlayerJumped>().player = this;
+                        Instantiate(jumpEffect, jumpPosition.position, Quaternion.identity);
                         jumpState = JumpState.InFlight;
                     }
                     break;
@@ -128,6 +138,7 @@ namespace Platformer.Mechanics
                     if(doubleJump && Input.GetButtonDown("Jump")) 
                     {
                         Schedule<PlayerJumped>().player = this;
+                        Instantiate(jumpEffect, jumpPosition.position, Quaternion.identity);
                         velocity.y = jumpTakeOffSpeed * model.jumpModifier;
                         doubleJump = false;
                     }
@@ -185,6 +196,12 @@ namespace Platformer.Mechanics
             {
                 StartCoroutine(InvincibilityTimer());
                 Destroy(collision.gameObject);
+            }
+
+            if (collision.CompareTag("Asteroid") && !invincible) 
+            {
+                audioSource.PlayOneShot(ouchAudio);
+                flash.Flash();
             }
         }
 

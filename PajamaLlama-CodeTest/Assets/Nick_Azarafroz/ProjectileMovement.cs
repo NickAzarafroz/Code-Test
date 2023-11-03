@@ -1,6 +1,11 @@
+using Platformer.Core;
+using Platformer.Gameplay;
+using Platformer.Mechanics;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
+using static Platformer.Core.Simulation;
 
 public class ProjectileMovement : MonoBehaviour
 {
@@ -30,6 +35,19 @@ public class ProjectileMovement : MonoBehaviour
     {
         if (collision.CompareTag("Player")) 
         {
+            var player = collision.GetComponent<PlayerController>();
+            var playerHealth = collision.GetComponent<Health>();
+            playerHealth.Decrement(1f);
+
+            if (!playerHealth.IsAlive) 
+            {
+                player.controlEnabled = false;
+                player.audioSource.PlayOneShot(player.ouchAudio);
+                player.animator.SetTrigger("hurt");
+                player.animator.SetBool("dead", true);
+                Schedule<PlayerSpawn>(2);
+            }
+
             Instantiate(effect, transform.position, transform.rotation); 
             Destroy(gameObject);
         }

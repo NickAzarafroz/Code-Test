@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileSpawner : MonoBehaviour
 {
     public GameObject projectile;
+    public GameObject spawnEffect;
     public Transform projectilePos;
     public AudioClip asteroidSpawn;
     public float distanceThreshold = 10f;
@@ -36,9 +37,10 @@ public class ProjectileSpawner : MonoBehaviour
             if(distance < distanceThreshold) 
             {
                 audioSource.PlayOneShot(asteroidSpawn);
+                Instantiate(spawnEffect, projectilePos.transform.position, Quaternion.identity);
                 Instantiate(projectile, projectilePos.transform.position, Quaternion.identity);
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2f);
         }
     }
 }

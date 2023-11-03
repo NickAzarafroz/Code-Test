@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1764738490361912273, guid: 00245def5afe91341a193d5e8b5f87bc,
     type: 3}
+  spawnEffect: {fileID: 665396336518051346, guid: 5b36579105900ac42863f66fee22aa71,
+    type: 3}
   projectilePos: {fileID: 4161457606717115441}
   asteroidSpawn: {fileID: 8300000, guid: 9f7d5c11fcea0fc4583b9de47247bed4, type: 3}
   distanceThreshold: 10
